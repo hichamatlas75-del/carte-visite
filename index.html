@@ -159,7 +159,7 @@
         .info-section {
             position: relative;
             z-index: 2;
-            padding: 28px 32px;
+            padding: 28px 32px 0;
         }
 
         .business-name {
@@ -334,10 +334,91 @@
             transform: translateX(0);
         }
 
+        /* QR Section */
+        .qr-section {
+            position: relative;
+            z-index: 2;
+            padding: 24px 32px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeUp 0.8s ease-out 1.05s forwards;
+            opacity: 0;
+        }
+
+        .qr-divider {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .qr-divider::before,
+        .qr-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
+        }
+
+        .qr-divider span {
+            font-size: 0.55rem;
+            font-weight: 600;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .qr-frame {
+            position: relative;
+            padding: 14px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 0 30px -8px rgba(255,255,255,0.08);
+            transition: all 0.4s ease;
+        }
+
+        .qr-frame:hover {
+            box-shadow: 0 0 40px -5px rgba(197,160,89,0.12);
+            transform: scale(1.02);
+        }
+
+        .qr-frame img {
+            display: block;
+            width: 130px;
+            height: 130px;
+            border-radius: 6px;
+        }
+
+        .qr-glow {
+            position: absolute;
+            inset: -20px;
+            border-radius: 30px;
+            background: radial-gradient(circle, rgba(197,160,89,0.04) 0%, transparent 70%);
+            pointer-events: none;
+            animation: qr-glow-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes qr-glow-pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .qr-label {
+            margin-top: 12px;
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
         .card-footer {
             position: relative;
             z-index: 2;
-            padding: 16px 32px 28px;
+            padding: 20px 32px 28px;
             display: flex;
             justify-content: center;
         }
@@ -357,7 +438,7 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            animation: fadeUp 0.8s ease-out 1.1s forwards;
+            animation: fadeUp 0.8s ease-out 1.2s forwards;
             opacity: 0;
             box-shadow: 0 0 20px -5px rgba(255,255,255,0.15);
         }
@@ -431,10 +512,13 @@
         @media (max-width: 480px) {
             .card-main { border-radius: 20px; }
             .logo-section { padding: 32px 24px 20px; }
-            .info-section { padding: 24px; }
-            .card-footer { padding: 12px 24px 24px; }
+            .info-section { padding: 24px 24px 0; }
+            .qr-section { padding: 20px 24px 0; }
+            .card-footer { padding: 16px 24px 24px; }
             .logo-img { width: 120px; }
             .business-name { font-size: 1.3rem; }
+            .qr-frame img { width: 110px; height: 110px; }
+            .qr-frame { padding: 12px; }
         }
     </style>
 </head>
@@ -450,6 +534,7 @@
             <div class="corner-deco br"></div>
             <div class="card-pattern"></div>
 
+            <!-- Logo -->
             <div class="logo-section">
                 <div class="logo-wrapper">
                     <img src="logo.png" alt="Grey Corner Café" class="logo-img">
@@ -458,6 +543,7 @@
 
             <div class="separator"></div>
 
+            <!-- Info -->
             <div class="info-section">
                 <div class="business-name">Grey Corner</div>
                 <div class="business-type">Café & Restaurant</div>
@@ -514,6 +600,22 @@
                 </div>
             </div>
 
+            <!-- QR Code intégré -->
+            <div class="qr-section">
+                <div class="qr-divider">
+                    <span>Scanner pour partager</span>
+                </div>
+                <div class="qr-frame">
+                    <div class="qr-glow"></div>
+                    <img
+                        src="https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=https%3A%2F%2Fcarte-visite-3xx.pages.dev%2F&bgcolor=ffffff&color=111111&margin=0&format=png"
+                        alt="QR Code"
+                    >
+                </div>
+                <p class="qr-label">carte-visite-3xx.pages.dev</p>
+            </div>
+
+            <!-- Bouton -->
             <div class="card-footer">
                 <button class="save-btn" id="saveBtn" onclick="saveContact()">
                     <i data-lucide="download"></i>
